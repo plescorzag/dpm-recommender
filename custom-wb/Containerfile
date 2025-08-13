@@ -1,0 +1,12 @@
+FROM quay.io/opendatahub-contrib/workbench-images:jupyter-datascience-c9s-py311_2023c_latest
+
+COPY requirements.txt ./
+
+RUN echo "Installing softwares and packages" && \
+    pip install -r ./requirements.txt && \
+    pip install micropipenv && \
+    micropipenv install && \
+    rm -f ./requirements.txt
+
+RUN chmod -R g+w /opt/app-root/lib/python3.11/site-packages && \
+    fix-permissions /opt/app-root -P
